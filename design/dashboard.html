@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard - Cloud Notes</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 overflow-hidden">
+<div class="flex h-screen w-full flex-row">
+<!-- Sidebar -->
+<aside class="flex w-64 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111318] flex-shrink-0 transition-all duration-300">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- User Profile -->
+<div class="flex gap-3 items-center px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBa_kPv6dRxgFc8usyBOl4PPy-qZwdVIGHu8wDKnL-iHyyeSTNYtQaUEuqTGPKLlTA5IdbvOwXaAupkrSzjTWlI2uG-VeeUSyEZREcsafiZ3LxXyzYhxc1vfxzZVo74sQwm30iZWc6OTwaVT7vzT8_dCIDsvoY6G2cOzO80iVQ6k-ka4thUyCt_jfU9hre47L8438o_tPXoDeJgvGUvFFgbQN6U33PO2HYqWz_n_6mJzBkRmvQNyWPeF-Hfzm1jizlmgIYVaXbVk4GQ");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">Alex Morgan</h1>
+<p class="text-slate-500 dark:text-[#9da6b9] text-xs font-normal leading-normal">Pro Plan</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:text-white dark:bg-[#282e39] group" href="#">
+<span class="material-symbols-outlined text-[24px]">description</span>
+<p class="text-sm font-medium leading-normal">All Notes</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-[#9da6b9] hover:bg-slate-100 dark:hover:bg-[#1e232e] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">star</span>
+<p class="text-sm font-medium leading-normal group-hover:text-slate-900 dark:group-hover:text-white">Favorites</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-[#9da6b9] hover:bg-slate-100 dark:hover:bg-[#1e232e] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">delete</span>
+<p class="text-sm font-medium leading-normal group-hover:text-slate-900 dark:group-hover:text-white">Trash</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-[#9da6b9] hover:bg-slate-100 dark:hover:bg-[#1e232e] group transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">folder</span>
+<p class="text-sm font-medium leading-normal group-hover:text-slate-900 dark:group-hover:text-white">Folders</p>
+</a>
+</nav>
+<!-- Tags Section -->
+<div class="flex flex-col gap-2 px-2 mt-4">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">Tags</h3>
+<div class="flex items-center gap-2 text-slate-600 dark:text-[#9da6b9] hover:text-slate-900 dark:hover:text-white cursor-pointer group">
+<span class="w-2 h-2 rounded-full bg-red-500"></span>
+<span class="text-sm">Personal</span>
+</div>
+<div class="flex items-center gap-2 text-slate-600 dark:text-[#9da6b9] hover:text-slate-900 dark:hover:text-white cursor-pointer group">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>
+<span class="text-sm">Work</span>
+</div>
+<div class="flex items-center gap-2 text-slate-600 dark:text-[#9da6b9] hover:text-slate-900 dark:hover:text-white cursor-pointer group">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-sm">Ideas</span>
+</div>
+</div>
+</div>
+<!-- Bottom Actions -->
+<div class="flex flex-col gap-4">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+<span class="truncate">Upgrade Plan</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full bg-background-light dark:bg-background-dark overflow-hidden relative">
+<!-- Top Bar -->
+<header class="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111318]/50 backdrop-blur-md z-10 sticky top-0">
+<div class="flex flex-1 max-w-xl">
+<div class="relative w-full group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border-none rounded-lg leading-5 bg-slate-100 dark:bg-[#1e232e] text-slate-900 dark:text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm transition-all" placeholder="Search title, content, or tags..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 pl-4">
+<button class="p-2 text-slate-500 hover:text-slate-900 dark:text-[#9da6b9] dark:hover:text-white transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-[#1e232e]">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white gap-2 text-sm font-bold leading-normal hover:bg-primary/90 transition-all shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="hidden sm:inline truncate">New Note</span>
+</button>
+</div>
+</header>
+<!-- Content Scroll Area -->
+<div class="flex-1 overflow-y-auto p-6 scrollbar-hide">
+<!-- Hero Section / Recent Highlight -->
+<div class="mb-8">
+<h2 class="text-slate-900 dark:text-white tracking-tight text-2xl font-bold leading-tight mb-4">Jump Back In</h2>
+<div class="relative w-full h-64 rounded-xl overflow-hidden shadow-lg group cursor-pointer">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Abstract workspace background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZMm_vzVGKeGEQAUpILIw8hw2ag7tSQy3PX18XeF6X5i1SZAVRyv0L6j45EIdxglDSIq_EBfd0ojo2895Jti3J1Fa_xvY-cAW82JdRno2zlNgKcZ-_HV1xQx1P0xJu3EY80QMs3E31SU-lPaxbj3V_27CeCasagf9j82A13vxWU8uni7P91wTM5fTuPb15HeFqjyJk7enp-56ORu3lhMlsFnC6kt2_vdTJnqkPwpppOG9qNE7jdVoiuzbt9pNJKOXEX2UcR4e4iFwv");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-6 w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-primary/90 text-white text-xs font-bold px-2 py-1 rounded">Project Alpha</span>
+<span class="text-slate-300 text-xs">Last edited 2h ago</span>
+</div>
+<h3 class="text-white text-3xl font-bold mb-2">Q3 Technical Roadmap</h3>
+<p class="text-slate-200 text-base max-w-2xl line-clamp-1">Reviewing the infrastructure scaling requirements and database migration plan for the upcoming quarter...</p>
+</div>
+</div>
+</div>
+<!-- Recent Notes Grid -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-slate-900 dark:text-white tracking-tight text-xl font-bold leading-tight">Recent Notes</h2>
+<div class="flex gap-2">
+<button class="p-1.5 rounded-md text-slate-500 hover:text-primary hover:bg-slate-100 dark:hover:bg-[#1e232e] transition-colors">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+<button class="p-1.5 rounded-md text-slate-400 hover:text-slate-600 dark:text-slate-600 dark:hover:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">list</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+<!-- Note Card 1 -->
+<div class="bg-white dark:bg-[#1e232e] p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-[200px] shadow-sm hover:shadow-md">
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-slate-900 dark:text-white font-bold text-lg line-clamp-1 group-hover:text-primary transition-colors">Marketing Strategy</h3>
+<span class="material-symbols-outlined text-slate-400 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-4 flex-1">
+                            Key demographics to target for the upcoming campaign include tech enthusiasts and early adopters. We need to focus on social media channels like Twitter and LinkedIn.
+                            - Content calendar draft
+                            - Influencer outreach list
+                            - Ad budget allocation
+                        </p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-400 dark:text-slate-500">Edited 4h ago</span>
+<div class="flex -space-x-2">
+<!-- Collaborators if any, showing one here for demo -->
+</div>
+</div>
+</div>
+<!-- Note Card 2 -->
+<div class="bg-white dark:bg-[#1e232e] p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-[200px] shadow-sm hover:shadow-md">
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-slate-900 dark:text-white font-bold text-lg line-clamp-1 group-hover:text-primary transition-colors">Grocery List</h3>
+<span class="material-symbols-outlined text-slate-400 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-4 flex-1">
+                            - Milk
+                            - Eggs (free range)
+                            - Bread (sourdough)
+                            - Avocados
+                            - Coffee beans
+                            - Spinach
+                            Don't forget to check for discounts on bulk items.
+                        </p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-400 dark:text-slate-500">Edited yesterday</span>
+</div>
+</div>
+<!-- Note Card 3 (Pinned/Favorite) -->
+<div class="bg-white dark:bg-[#1e232e] p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-[200px] shadow-sm hover:shadow-md relative overflow-hidden">
+<div class="absolute top-0 right-0 w-12 h-12">
+<div class="absolute transform rotate-45 bg-primary text-white text-[10px] font-bold py-1 right-[-35px] top-[32px] w-[170px] text-center shadow-sm">PINNED</div>
+</div>
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-slate-900 dark:text-white font-bold text-lg line-clamp-1 group-hover:text-primary transition-colors">Weekly Standup</h3>
+<span class="material-symbols-outlined text-slate-400 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity mr-4">more_horiz</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-4 flex-1">
+                            Updates:
+                            - Backend migration 80% complete.
+                            - Design system updated with new color tokens.
+                            - Client meeting scheduled for Friday at 2 PM.
+                            Blockers: None currently.
+                        </p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-400 dark:text-slate-500">Edited 2 days ago</span>
+</div>
+</div>
+<!-- Note Card 4 -->
+<div class="bg-white dark:bg-[#1e232e] p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-[200px] shadow-sm hover:shadow-md">
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-slate-900 dark:text-white font-bold text-lg line-clamp-1 group-hover:text-primary transition-colors">Book Notes: Atomic Habits</h3>
+<span class="material-symbols-outlined text-slate-400 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-4 flex-1">
+                            Chapter 1: The Surprising Power of Atomic Habits.
+                            Success is the product of daily habits—not once-in-a-lifetime transformations.
+                            1% better every day concept.
+                        </p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-400 dark:text-slate-500">Edited 5 days ago</span>
+</div>
+</div>
+<!-- Note Card 5 -->
+<div class="bg-white dark:bg-[#1e232e] p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-primary/50 dark:hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-[200px] shadow-sm hover:shadow-md">
+<div class="flex justify-between items-start mb-3">
+<h3 class="text-slate-900 dark:text-white font-bold text-lg line-clamp-1 group-hover:text-primary transition-colors">Travel Itinerary: Japan</h3>
+<span class="material-symbols-outlined text-slate-400 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">more_horiz</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-4 flex-1">
+                            Flight details: JL005 departing SFO at 12:40 PM.
+                            Hotel: Shinjuku Granbell.
+                            Places to visit:
+                            - Shibuya Crossing
+                            - Meiji Shrine
+                            - Tsukiji Outer Market
+                        </p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-700/50">
+<span class="text-xs text-slate-400 dark:text-slate-500">Edited 1 week ago</span>
+</div>
+</div>
+<!-- Add New Card Placeholder -->
+<div class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl flex flex-col items-center justify-center h-[200px] cursor-pointer hover:border-primary hover:bg-primary/5 transition-all group">
+<div class="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-2 group-hover:bg-primary group-hover:text-white transition-colors text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined">add</span>
+</div>
+<span class="text-slate-500 dark:text-slate-400 font-medium text-sm group-hover:text-primary">Create New Note</span>
+</div>
+</div>
+</div>
+<!-- Folders Section -->
+<div class="mt-10 mb-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-slate-900 dark:text-white tracking-tight text-xl font-bold leading-tight">Folders</h2>
+<button class="text-sm text-primary font-bold hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-[#1e232e] p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-[#252b36] transition-colors">
+<div class="w-12 h-12 rounded-lg bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">folder</span>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold">Personal</h4>
+<p class="text-slate-500 text-xs">12 notes</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1e232e] p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-[#252b36] transition-colors">
+<div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">work</span>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold">Work Projects</h4>
+<p class="text-slate-500 text-xs">45 notes</p>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1e232e] p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-[#252b36] transition-colors">
+<div class="w-12 h-12 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined">flight</span>
+</div>
+<div>
+<h4 class="text-slate-900 dark:text-white font-bold">Travel</h4>
+<p class="text-slate-500 text-xs">8 notes</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

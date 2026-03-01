@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Note Editor - CloudNotes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#135bec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#1c1f27", // Derived from original component
+              "border-dark": "#282e39", // Derived from original component
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"],
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282e39;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4354;
+        }
+        /* Hide outline on focus for content editable divs to keep it clean */
+        [contenteditable]:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col overflow-hidden">
+<!-- Header / Top Nav -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark px-6 py-3 bg-white dark:bg-background-dark z-20">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[32px]">cloud_circle</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">CloudNotes</h2>
+<div class="h-6 w-px bg-slate-200 dark:bg-border-dark mx-2"></div>
+<!-- Breadcrumbs / Context -->
+<div class="hidden md:flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span class="hover:text-primary cursor-pointer transition-colors">Personal</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="hover:text-primary cursor-pointer transition-colors">Q3 Goals</span>
+</div>
+</div>
+<!-- Center Actions (Status) -->
+<div class="hidden lg:flex items-center gap-2 text-xs font-medium text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-[16px]">cloud_done</span>
+<span>All changes saved</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-1">
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors" title="Version History">
+<span class="material-symbols-outlined">history</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors" title="Favorite">
+<span class="material-symbols-outlined">star</span>
+</button>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-lg transition-colors shadow-lg shadow-blue-500/20">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Share</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-100 dark:ring-border-dark cursor-pointer" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC9eKKzjjp7B0qU-MR7xC4BKrv3dSVZyzyulcJwE0uejIevFriWl6LnpO8t7i3LaiBMfYKcA2j4cmtLkt4G7Tb4R4P8iVu1CMhvbQ00QQChPHMDDjxiZOIaukVF936K-5MrRu5KyU7Uu8tvW2GgQ2whdRfqtheo2bC2R5eY7p3vzXtgch6Mxitdo_7S3sjoKL1kpalxSjnwmvgtiKUPRhskU4YzDbrfXEpYnRxyHhREUpyyLDW8BrCAHQXkRWRhVoqTKFA0e70ZKaVl");'></div>
+</div>
+</header>
+<!-- Main Layout -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Sidebar Navigation (Collapsed on mobile, icons only) -->
+<nav class="hidden md:flex flex-col items-center py-6 w-16 border-r border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark">
+<div class="flex flex-col gap-4 w-full px-2">
+<button class="group flex items-center justify-center p-2 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined">edit_square</span>
+</button>
+<button class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined">folder_open</span>
+</button>
+<button class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="mt-auto flex flex-col gap-4 w-full px-2">
+<button class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</nav>
+<!-- Editor Area -->
+<main class="flex-1 flex flex-col relative overflow-y-auto bg-white dark:bg-background-dark">
+<!-- Sticky Formatting Toolbar -->
+<div class="sticky top-0 z-10 flex items-center justify-center border-b border-slate-200 dark:border-border-dark bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-4 py-2">
+<div class="flex items-center gap-1 p-1 bg-slate-100 dark:bg-surface-dark rounded-lg border border-slate-200 dark:border-border-dark shadow-sm">
+<div class="flex items-center gap-0.5 border-r border-slate-200 dark:border-border-dark pr-2 mr-1">
+<select class="bg-transparent text-xs font-medium text-slate-700 dark:text-slate-200 border-none focus:ring-0 cursor-pointer h-8 rounded hover:bg-slate-200 dark:hover:bg-border-dark px-2">
+<option>Normal Text</option>
+<option>Heading 1</option>
+<option>Heading 2</option>
+<option>Heading 3</option>
+</select>
+</div>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Bold">
+<span class="material-symbols-outlined text-[20px]">format_bold</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Italic">
+<span class="material-symbols-outlined text-[20px]">format_italic</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Underline">
+<span class="material-symbols-outlined text-[20px]">format_underlined</span>
+</button>
+<div class="w-px h-4 bg-slate-300 dark:bg-border-dark mx-1"></div>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Bullet List">
+<span class="material-symbols-outlined text-[20px]">format_list_bulleted</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Numbered List">
+<span class="material-symbols-outlined text-[20px]">format_list_numbered</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Checklist">
+<span class="material-symbols-outlined text-[20px]">check_box</span>
+</button>
+<div class="w-px h-4 bg-slate-300 dark:bg-border-dark mx-1"></div>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Insert Image">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-200 dark:hover:bg-border-dark text-slate-600 dark:text-slate-400 transition-colors" title="Insert Link">
+<span class="material-symbols-outlined text-[20px]">link</span>
+</button>
+</div>
+</div>
+<!-- Note Content -->
+<div class="max-w-[850px] mx-auto w-full px-8 py-12 pb-32">
+<!-- Title Input -->
+<input class="w-full bg-transparent border-none text-4xl font-bold text-slate-900 dark:text-white placeholder-slate-300 dark:placeholder-slate-600 focus:ring-0 px-0 mb-4 leading-tight" placeholder="Untitled Note" type="text" value="Meeting Notes - Q3 Planning"/>
+<!-- Meta info line inside editor -->
+<div class="flex items-center gap-4 text-sm text-slate-400 dark:text-slate-500 mb-8 border-b border-slate-100 dark:border-border-dark pb-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>Oct 24, 2023</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>10:30 AM</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span>Created by you</span>
+</div>
+</div>
+<!-- Content Body -->
+<article class="prose prose-slate dark:prose-invert max-w-none prose-lg">
+<p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                        Reviewing the quarterly goals for Q3. The main focus will be on <strong>user retention</strong> and expanding the enterprise tier features. We need to ensure that the infrastructure can scale with the anticipated 20% growth in user base.
+                    </p>
+<h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mt-8 mb-4">Key Agenda Items</h3>
+<ul class="space-y-2 list-none pl-0">
+<li class="flex items-start gap-3">
+<input checked="" class="mt-1.5 rounded border-slate-300 text-primary focus:ring-primary bg-slate-50 dark:bg-surface-dark dark:border-slate-600" type="checkbox"/>
+<span class="text-slate-600 dark:text-slate-300 line-through decoration-slate-400">Review Q2 Performance Metrics</span>
+</li>
+<li class="flex items-start gap-3">
+<input checked="" class="mt-1.5 rounded border-slate-300 text-primary focus:ring-primary bg-slate-50 dark:bg-surface-dark dark:border-slate-600" type="checkbox"/>
+<span class="text-slate-600 dark:text-slate-300 line-through decoration-slate-400">Budget Allocation for Marketing</span>
+</li>
+<li class="flex items-start gap-3">
+<input class="mt-1.5 rounded border-slate-300 text-primary focus:ring-primary bg-slate-50 dark:bg-surface-dark dark:border-slate-600" type="checkbox"/>
+<span class="text-slate-600 dark:text-slate-300">New Feature Roadmap Finalization</span>
+</li>
+<li class="flex items-start gap-3">
+<input class="mt-1.5 rounded border-slate-300 text-primary focus:ring-primary bg-slate-50 dark:bg-surface-dark dark:border-slate-600" type="checkbox"/>
+<span class="text-slate-600 dark:text-slate-300">Team Resource Planning</span>
+</li>
+</ul>
+<h3 class="text-xl font-bold text-slate-800 dark:text-slate-100 mt-8 mb-4">Design Mockups</h3>
+<div class="my-6 rounded-xl overflow-hidden border border-slate-200 dark:border-border-dark bg-slate-50 dark:bg-surface-dark">
+<div class="w-full h-64 bg-cover bg-center" data-alt="Abstract colorful gradient waves representing design flow" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD15EGFMrbUC1Kf94gZjgxfnZ54c-ZJMli60QrR7zw6jpmZxQ-c49REG040HFQJ-tOjCIscQ3L6vQFbzVU9jzhC71dTO-zE9fQgslXc0GMVALDbKOZ1ecoKTZNGOz5uVjlspOj26fTDm9RYRpQurbvvQyAz4pxMjzUbYInAOehHcm61aRjWphjeTZi6DHE2jLVm4Oq_BGRh6ErRSEzvO1d0gOhKCZIH8AamuxrCRSvLjwN7svJ3VLD_ytmXsOwO6P25jeaAhRwgIdM9");'></div>
+<div class="px-4 py-2 text-xs text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-border-dark flex justify-between items-center">
+<span>mockup_v2_final.png</span>
+<button class="hover:text-primary"><span class="material-symbols-outlined text-[16px]">download</span></button>
+</div>
+</div>
+<p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        The new design language (shown above) incorporates more whitespace and a softer color palette. This should help reduce cognitive load for users dealing with complex data sets.
+                    </p>
+<div class="p-4 mt-6 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-primary rounded-r-lg">
+<p class="text-sm text-blue-800 dark:text-blue-100 m-0 font-medium">
+<strong class="block mb-1 text-primary">Action Item:</strong>
+                            Schedule a follow-up meeting with the design team by Friday to finalize the component library updates.
+                        </p>
+</div>
+</article>
+</div>
+</main>
+<!-- Right Sidebar (Properties) -->
+<aside class="w-80 bg-slate-50 dark:bg-surface-dark border-l border-slate-200 dark:border-border-dark overflow-y-auto hidden xl:block">
+<div class="p-5">
+<h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Note Properties</h3>
+<!-- Folders -->
+<div class="mb-6">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Location</label>
+<button class="w-full flex items-center justify-between px-3 py-2 bg-white dark:bg-background-dark border border-slate-200 dark:border-border-dark rounded-lg hover:border-primary dark:hover:border-primary transition-colors text-left group">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="material-symbols-outlined text-yellow-500 text-[20px]">folder</span>
+<span class="text-sm text-slate-700 dark:text-slate-200 truncate">Quarterly Planning</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary text-[18px]">expand_more</span>
+</button>
+</div>
+<!-- Tags -->
+<div class="mb-6">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Tags</label>
+<div class="flex flex-wrap gap-2 mb-2">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-medium border border-purple-200 dark:border-purple-800">
+                            #meeting
+                            <button class="hover:text-purple-900 dark:hover:text-purple-100"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium border border-green-200 dark:border-green-800">
+                            #q3-goals
+                            <button class="hover:text-green-900 dark:hover:text-green-100"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</span>
+</div>
+<input class="w-full bg-transparent border-b border-slate-200 dark:border-border-dark focus:border-primary px-0 py-1 text-sm text-slate-600 dark:text-slate-300 focus:ring-0 placeholder-slate-400" placeholder="Add a tag..." type="text"/>
+</div>
+<div class="border-t border-slate-200 dark:border-border-dark my-6"></div>
+<h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Info</h3>
+<div class="space-y-4">
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Created</span>
+<span class="text-slate-700 dark:text-slate-200 font-medium">Oct 24, 2023</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Last Edited</span>
+<span class="text-slate-700 dark:text-slate-200 font-medium">Just now</span>
+</div>
+<div class="flex justify-between text-sm">
+<span class="text-slate-500 dark:text-slate-400">Word count</span>
+<span class="text-slate-700 dark:text-slate-200 font-medium">1,204</span>
+</div>
+</div>
+<div class="border-t border-slate-200 dark:border-border-dark my-6"></div>
+<!-- Collaborators -->
+<h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Collaborators</h3>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8" data-alt="Profile picture of Sarah" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBASmRZ5XyJWTJ_KtyYNqxqAGkKf5O2VjJ9kqMyPPeVLeTnT2BRgnZ2Yx9SUgrV5Gg30rmQckMbXtMMHcGMshPPudUmI6FNgvvxlomeFZ8prW25RoqXtPj_sHK_0z9Bhdhc-PO_IkGrnOPIp3ijn1YeZO1UnvBTNus7-eYZnsSddPlZc08LLbySVgM6hKXXrob24bek1c5RoZOzwFkl5iNYf4xE0E0uU3vbHdaJ2AwHr1NViurDnMScUTwaHvXlxkGGj6nGYOqwNqde");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Sarah Jenkins</span>
+<span class="text-xs text-slate-400">Owner</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8 opacity-60 grayscale" data-alt="Profile picture of Mike" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFQ5GN9j8DoIOJMQLXgT8AFBylIsVljNmtu-xD-ABai3gH1hTVqDtDrCQamoy5hFa2WV1Q7kqysmVha6jD2k7WoZUbsZKEcNHWo5PIrCQlY5L4qaQ5jJ61gXjyd4bUev0mzfO-VO3Zyx4KsbigDNHjGjBFuFLG7p_yIvl38DJKw8bSWUiIUj5y8X8zbjwWEXjMSUrPMxbHO5Ek3s0fxSTv0KFDVv_maVZIJpgzi_vXFu_oCDoHmH1XqMz37klPklHnorZBUN_At5lw");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Mike Ross</span>
+<span class="text-xs text-slate-400">Viewer</span>
+</div>
+</div>
+<button class="mt-2 text-sm text-primary font-medium hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">add</span> Invite others
+                    </button>
+</div>
+</div>
+</aside>
+</div>
+</body></html>
