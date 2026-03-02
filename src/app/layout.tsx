@@ -15,8 +15,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CloudNotes - Capture your thoughts",
-  description: "Capture thoughts, anywhere, anytime.",
+  title: {
+    default: "CloudNotes - Capture your thoughts",
+    template: "%s | CloudNotes",
+  },
+  description: "Capture thoughts, anywhere, anytime. CloudNotes is a smart cloud note app supporting AI-powered search and end-to-end encryption.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  openGraph: {
+    title: "CloudNotes - Capture your thoughts",
+    description: "Capture thoughts, anywhere, anytime.",
+    url: "/",
+    siteName: "CloudNotes",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CloudNote Preview Image",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CloudNotes - Capture your thoughts",
+    description: "Capture thoughts, anywhere, anytime.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
