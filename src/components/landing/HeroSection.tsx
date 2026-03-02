@@ -18,7 +18,7 @@ export async function HeroSection() {
                             </span>
                             <h1 className="text-slate-900 dark:text-white text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight">
                                 Capture thoughts,<br />
-                                <span className="text-primary">anywhere, anytime.</span>
+                                <span className="text-primary">anywhere, anytime.!!!</span>
                             </h1>
                             <p className="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-lg">
                                 The AI-powered note-taking app that syncs instantly across all your devices. Secure, simple, and smarter than ever.

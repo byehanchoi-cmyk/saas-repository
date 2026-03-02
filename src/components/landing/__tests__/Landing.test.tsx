@@ -9,7 +9,7 @@ describe('Landing Page Components', () => {
         it('renders the main heading', () => {
             render(<HeroSection />)
             expect(screen.getByText(/Capture thoughts,/i)).toBeInTheDocument()
-            expect(screen.getByText(/anywhere, anytime./i)).toBeInTheDocument()
+            expect(screen.getByText(/anywhere, anytime.!!!/i)).toBeInTheDocument()
         })
 
         it('renders the CTA buttons', () => {
